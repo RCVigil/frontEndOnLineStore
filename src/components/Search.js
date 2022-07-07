@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 
 class search extends Component {
-  state = {
-    search: '',
-  };
+  constructor() {
+    super();
+    this.state = {
+      inputSearch: '',
+    };
+  }
 
   handleChange = ({ target }) => {
     const { value } = target;
     this.setState({
-      search: value,
+      inputSearch: value,
     });
   }
 
   render() {
-    const { search } = this.state;
+    const { inputSearch } = this.state;
     return (
       <div>
         <input
@@ -21,11 +24,12 @@ class search extends Component {
           onChange={ this.handleChange }
         />
 
-        { search === '' ? <h4
-          data-testid="home-initial-message"
-        >
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </h4> : ''}
+        {inputSearch === '' ? (
+          <h4
+            data-testid="home-initial-message"
+          >
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </h4>) : ''}
       </div>
     );
   }
