@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Category from '../components/Category';
 
 class search extends Component {
   constructor() {
@@ -19,19 +20,23 @@ class search extends Component {
   render() {
     const { inputSearch } = this.state;
     return (
-      <div>
+      <div className="search">
         <input
+          className="inputSearch"
           type="text"
+          placeholder="Busca"
           onChange={ this.handleChange }
         />
+        <section className="results">
+          <Category />
 
-        {inputSearch === '' ? (
-          <h4
-            data-testid="home-initial-message"
-          >
-            Digite algum termo de pesquisa ou escolha uma categoria.
-          </h4>) : ''}
-
+          {inputSearch === '' ? (
+            <h4
+              data-testid="home-initial-message"
+            >
+              Digite algum termo de pesquisa ou escolha uma categoria.
+            </h4>) : ''}
+        </section>
         <Link
           to="/carrinho"
           data-testid="shopping-cart-button"
