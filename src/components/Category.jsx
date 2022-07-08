@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { getCategories } from '../services/api';
 
@@ -12,8 +13,13 @@ export default class Category extends Component {
 
   searchApi = async () => {
     const data = await getCategories();
-    console.log(data);
     this.setState({ data });
+  }
+
+  inputRadio = ({ target }) => {
+    const { categoryId } = this.props;
+    const { value } = target;
+    categoryId(value);
   }
 
   render() {
@@ -30,6 +36,8 @@ export default class Category extends Component {
               id={ item.id }
               type="radio"
               name="category"
+              value={ item.id }
+              onChange={ this.inputRadio }
             />
             {item.name}
           </label>
@@ -39,3 +47,7 @@ export default class Category extends Component {
     );
   }
 }
+
+Category.propTypes = {
+  categoryId: PropTypes.func.isRequired,
+};

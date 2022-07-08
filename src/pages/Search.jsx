@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Category from '../components/Category';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import Loading from '../components/Loading';
 
 class Search extends Component {
   constructor() {
@@ -10,41 +11,64 @@ class Search extends Component {
       inputSearch: '',
       list: [],
       search: false,
+      id: '',
+      btn: true,
+      displayList: true,
+      loading: false,
     };
   }
+
+  // componentDidMount() {
+  //   this.getApi();
+  // }
 
   handleChange = ({ target }) => {
     const { value } = target;
     this.setState({
       inputSearch: value,
+      btn: !value.length > 0,
     });
   }
 
-  onClickgetProducts = async () => {
-    const { inputSearch } = this.state;
-    const list = await getProductsFromCategoryAndQuery('', inputSearch);
-    this.setState({ list: list.results, search: true });
+  getApi = async () => {
+    const { inputSearch, id } = this.state;
+    this.setState({ loading: true });
+    const list = await getProductsFromCategoryAndQuery(id, inputSearch);
+    this.setState({ list: list.results, search: true, loading: false });
+  }
+
+  onClickgetProducts = () => {
+    this.getApi();
+    this.setState({ search: true, displayList: false });
+  }
+
+  categoryId = (id) => {
+    this.setState({ id }, () => {
+      this.getApi();
+      this.setState({ search: true, displayList: false });
+    });
   }
 
   renderProductList = () => {
-    const { list, search } = this.state;
+    const { list, search, loading } = this.state;
     const renderedList = list.map((product, index) => (
       <div className="listProducts" data-testid="product" key={ index }>
         <h4>{product.title}</h4>
         <img src={ product.thumbnail } alt={ product.title } />
         <p>
           R$
-          { product.price }
+          {product.price}
           ,00
         </p>
       </div>));
-    return search && list.length === 0
+    const display = search && list.length === 0
       ? <h4> Nenhum produto foi encontrado </h4>
       : renderedList;
+    return loading ? <Loading /> : display;
   }
 
   render() {
-    const { inputSearch } = this.state;
+    const { inputSearch, btn, displayList } = this.state;
     return (
       <div className="search">
         <input
@@ -60,14 +84,15 @@ class Search extends Component {
           data-testid="query-button"
           type="button"
           onClick={ this.onClickgetProducts }
+          disabled={ btn }
         >
           Buscar
         </button>
 
         <section className="results">
-          <Category />
+          <Category categoryId={ this.categoryId } />
 
-          {inputSearch === '' ? (
+          {displayList ? (
             <h4
               data-testid="home-initial-message"
             >
