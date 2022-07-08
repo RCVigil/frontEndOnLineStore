@@ -16,3 +16,8 @@
 .inputSearch {
   width: 300px;
 }
+
+.listProducts {
+  display: flex;
+  flex-direction: column;
+}
