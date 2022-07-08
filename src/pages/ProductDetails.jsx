@@ -20,6 +20,12 @@ export default class ProductDetails extends Component {
     this.setState({ productObj: data, loading: false });
   }
 
+  addToCart = (obj) => {
+    const local = JSON.parse(localStorage.getItem('productCart'));
+    const arr = [...[...local || []], obj];
+    localStorage.setItem('productCart', JSON.stringify(arr));
+  }
+
   render() {
     const { loading, productObj } = this.state;
     return (
@@ -35,6 +41,14 @@ export default class ProductDetails extends Component {
               ,00
             </p>
             <img src={ productObj.thumbnail } alt={ productObj.title } />
+            <button
+              type="button"
+              data-testid="product-detail-add-to-cart"
+              onClick={ () => this.addToCart(productObj) }
+            >
+              Adicionar ao Carrinho
+
+            </button>
             <Link
               to="/carrinho"
               data-testid="shopping-cart-button"
