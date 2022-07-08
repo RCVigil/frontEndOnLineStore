@@ -54,7 +54,7 @@ class Search extends Component {
     const renderedList = list.map((product, index) => (
       <div className="listProducts" data-testid="product" key={ index }>
         <h4>{product.title}</h4>
-        <img src={ product.thumbnail } alt={ product.title } />
+        <img src={ product.thumbnail } alt={ product.title } width="100px" />
         <p>
           R$
           {product.price}
@@ -70,7 +70,7 @@ class Search extends Component {
   render() {
     const { inputSearch, btn, displayList } = this.state;
     return (
-      <div className="search">
+      <div>
         <input
           className="inputSearch"
           type="text"
@@ -88,17 +88,19 @@ class Search extends Component {
         >
           Buscar
         </button>
-
-        <section className="results">
+        <div className="search">
           <Category categoryId={ this.categoryId } />
+          <section className="results">
 
-          {displayList ? (
-            <h4
-              data-testid="home-initial-message"
-            >
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </h4>) : (this.renderProductList())}
-        </section>
+            {displayList ? (
+              <h4
+                data-testid="home-initial-message"
+              >
+                Digite algum termo de pesquisa ou escolha uma categoria.
+              </h4>) : (this.renderProductList())}
+          </section>
+        </div>
+
         <Link
           to="/carrinho"
           data-testid="shopping-cart-button"
