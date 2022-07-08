@@ -15,10 +15,8 @@ class App extends Component {
             <Route exact path="/" component={ Search } />
             <Route
               exact
-              path="/carrinho/:id"
-              render={ (props) => (<Carrinho
-                { ...props }
-              />) }
+              path="/carrinho"
+              component={ Carrinho }
             />
             <Route
               path="/ProductDetails/:productId"
