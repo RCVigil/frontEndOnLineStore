@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Category from '../components/Category';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Loading from '../components/Loading';
@@ -15,11 +15,17 @@ class Search extends Component {
       btn: true,
       displayList: true,
       loading: false,
+      idProduct: '',
+      redirect: false,
     };
   }
 
   // componentDidMount() {
-  //   this.getApi();
+  //   const { inputSearch, id } = this.state;
+  //   if (inputSearch || id) {
+  //     this.getApi();
+  //     this.setState({ search: true, displayList: false });
+  //   }
   // }
 
   handleChange = ({ target }) => {
@@ -49,17 +55,39 @@ class Search extends Component {
     });
   }
 
+  ProductDetails = (obj) => {
+    this.setState({ idProduct: obj.id, redirect: true });
+  }
+
   renderProductList = () => {
     const { list, search, loading } = this.state;
     const renderedList = list.map((product, index) => (
-      <div className="listProducts" data-testid="product" key={ index }>
+      <div
+        className="listProducts"
+        data-testid="product"
+        key={ index }
+
+      >
         <h4>{product.title}</h4>
-        <img src={ product.thumbnail } alt={ product.title } width="100px" />
+        <img
+          src={ product.thumbnail }
+          alt={ product.title }
+          width="100px"
+
+        />
         <p>
           R$
           {product.price}
           ,00
         </p>
+        <button
+          type="button"
+          data-testid="product-detail-link"
+          onClick={ () => this.ProductDetails(product) }
+        >
+          Detalhes
+
+        </button>
       </div>));
     const display = search && list.length === 0
       ? <h4> Nenhum produto foi encontrado </h4>
@@ -68,45 +96,50 @@ class Search extends Component {
   }
 
   render() {
-    const { inputSearch, btn, displayList } = this.state;
+    const { inputSearch, btn, displayList, idProduct, redirect } = this.state;
     return (
       <div>
-        <input
-          className="inputSearch"
-          type="text"
-          data-testid="query-input"
-          placeholder="Busca"
-          onChange={ this.handleChange }
-          value={ inputSearch }
-        />
+        {redirect ? <Redirect
+          to={ `/ProductDetails/${idProduct}` }
+        /> : (
+          <>
+            <Link
+              to="/carrinho"
+              data-testid="shopping-cart-button"
+            >
+              Ir para o carrinho
+            </Link>
+            <input
+              className="inputSearch"
+              type="text"
+              data-testid="query-input"
+              placeholder="Busca"
+              onChange={ this.handleChange }
+              value={ inputSearch }
+            />
+            <button
+              data-testid="query-button"
+              type="button"
+              onClick={ this.onClickgetProducts }
+              disabled={ btn }
+            >
+              Buscar
+            </button>
+            <div className="search">
+              <Category categoryId={ this.categoryId } />
+              <section className="results">
 
-        <button
-          data-testid="query-button"
-          type="button"
-          onClick={ this.onClickgetProducts }
-          disabled={ btn }
-        >
-          Buscar
-        </button>
-        <div className="search">
-          <Category categoryId={ this.categoryId } />
-          <section className="results">
+                {displayList ? (
+                  <h4
+                    data-testid="home-initial-message"
+                  >
+                    Digite algum termo de pesquisa ou escolha uma categoria.
+                  </h4>) : (this.renderProductList())}
+              </section>
+            </div>
 
-            {displayList ? (
-              <h4
-                data-testid="home-initial-message"
-              >
-                Digite algum termo de pesquisa ou escolha uma categoria.
-              </h4>) : (this.renderProductList())}
-          </section>
-        </div>
-
-        <Link
-          to="/carrinho"
-          data-testid="shopping-cart-button"
-        >
-          Ir para o carrinho
-        </Link>
+          </>
+        )}
 
       </div>
     );
