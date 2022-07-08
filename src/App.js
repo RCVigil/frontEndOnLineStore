@@ -13,7 +13,13 @@ class App extends Component {
           <Link to="/">Search</Link>
           <Switch>
             <Route exact path="/" component={ Search } />
-            <Route exact path="/carrinho" component={ Carrinho } />
+            <Route
+              exact
+              path="/carrinho/:id"
+              render={ (props) => (<Carrinho
+                { ...props }
+              />) }
+            />
             <Route
               path="/ProductDetails/:productId"
               render={ (props) => <ProductDetails { ...props } /> }
