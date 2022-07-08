@@ -21,7 +21,11 @@ class Search extends Component {
   }
 
   // componentDidMount() {
-  //   this.getApi();
+  //   const { inputSearch, id } = this.state;
+  //   if (inputSearch || id) {
+  //     this.getApi();
+  //     this.setState({ search: true, displayList: false });
+  //   }
   // }
 
   handleChange = ({ target }) => {
