@@ -59,6 +59,12 @@ class Search extends Component {
     this.setState({ idProduct: obj.id, redirect: true });
   }
 
+  addToCart = (product) => {
+    const localInfo = JSON.parse(localStorage.getItem('productCart'));
+    const data = [...[...localInfo || []], product];
+    localStorage.setItem('productCart', JSON.stringify(data));
+  }
+
   renderProductList = () => {
     const { list, search, loading } = this.state;
     const renderedList = list.map((product, index) => (
@@ -87,6 +93,13 @@ class Search extends Component {
         >
           Detalhes
 
+        </button>
+        <button
+          type="button"
+          data-testid="product-add-to-cart"
+          onClick={ () => this.addToCart(product) }
+        >
+          Adicionar ao carrinho
         </button>
       </div>));
     const display = search && list.length === 0
