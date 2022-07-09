@@ -59,10 +59,15 @@ class Search extends Component {
     this.setState({ idProduct: obj.id, redirect: true });
   }
 
-  addToCart = (product) => {
-    const localInfo = JSON.parse(localStorage.getItem('productCart'));
-    const data = [...[...localInfo || []], product];
-    localStorage.setItem('productCart', JSON.stringify(data));
+  addToCart = (obj) => {
+    const local = JSON.parse(localStorage.getItem('productCart'));
+    if (local === null) {
+      const data = [obj];
+      return localStorage.setItem('productCart', JSON.stringify(data));
+    }
+    const filter = local.filter(({ id }) => id !== obj.id);
+    const arr = [...filter, obj];
+    localStorage.setItem('productCart', JSON.stringify(arr));
   }
 
   renderProductList = () => {

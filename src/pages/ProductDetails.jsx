@@ -27,7 +27,12 @@ export default class ProductDetails extends Component {
 
   addToCart = (obj) => {
     const local = JSON.parse(localStorage.getItem('productCart'));
-    const arr = [...[...local || []], obj];
+    if (local === null) {
+      const data = [obj];
+      return localStorage.setItem('productCart', JSON.stringify(data));
+    }
+    const filter = local.filter(({ id }) => id !== obj.id);
+    const arr = [...filter, obj];
     localStorage.setItem('productCart', JSON.stringify(arr));
   }
 
