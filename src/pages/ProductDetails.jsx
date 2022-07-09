@@ -2,10 +2,14 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from '../components/Loading';
+import Form from '../components/Form';
+import '../css/App.css';
+import ReviewList from '../components/ReviewList';
 
 export default class ProductDetails extends Component {
   state = {
     productObj: {},
+    productReview: [],
     loading: true,
   }
 
@@ -17,7 +21,8 @@ export default class ProductDetails extends Component {
     const { match: { params: { productId } } } = this.props;
     const response = await fetch(`https://api.mercadolibre.com/items/${productId}`);
     const data = await response.json();
-    this.setState({ productObj: data, loading: false });
+    this.setState({ productObj: data, loading: false },
+      () => this.getReviewListfromLocalStorage());
   }
 
   addToCart = (obj) => {
@@ -31,8 +36,22 @@ export default class ProductDetails extends Component {
     localStorage.setItem('productCart', JSON.stringify(arr));
   }
 
+  submit = () => {
+    // this.setState({ productReview: [obj] });
+    this.getReviewListfromLocalStorage();
+  }
+
+  getReviewListfromLocalStorage = () => {
+    const localInfo = JSON.parse(localStorage.getItem('reviewList'));
+    const { productObj } = this.state;
+    if (localInfo !== null) {
+      const data = localInfo.filter(({ id }) => id === productObj.id);
+      this.setState({ productReview: data });
+    }
+  }
+
   render() {
-    const { loading, productObj } = this.state;
+    const { loading, productObj, productReview } = this.state;
     return (
       <div>
         {loading ? <Loading /> : (
@@ -43,7 +62,6 @@ export default class ProductDetails extends Component {
             <p>
               R$
               {productObj.price}
-              ,00
             </p>
             <img src={ productObj.thumbnail } alt={ productObj.title } />
             <button
@@ -60,6 +78,9 @@ export default class ProductDetails extends Component {
             >
               Ir para o carrinho
             </Link>
+            <Form id={ productObj.id } submit={ this.submit } />
+            { productReview.map((item, index) => (
+              <ReviewList key={ index } obj={ item } />))}
           </div>
         )}
       </div>

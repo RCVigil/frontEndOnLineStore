@@ -22,3 +22,36 @@
   display: flex;
   flex-direction: column;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  width: 400px;
+}
+
+.rate {
+  float: left;
+  height: 46px;
+  padding: 0 10px;
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+/*
+.estrelas input[ type = 'radio' ] {
+  display: none;
+}
+
+.estrelas label i.fa:before {
+  color: #fc0;
+  content: '\f005';
+}
+
+.estrelas input[ type = 'radio' ]:checked ~ label i.fa:before {
+  color: #ccc;
+} */

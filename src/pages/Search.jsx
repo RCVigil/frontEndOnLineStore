@@ -89,7 +89,6 @@ class Search extends Component {
         <p>
           R$
           {product.price}
-          ,00
         </p>
         <button
           type="button"
