@@ -20,14 +20,6 @@ class Search extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { inputSearch, id } = this.state;
-  //   if (inputSearch || id) {
-  //     this.getApi();
-  //     this.setState({ search: true, displayList: false });
-  //   }
-  // }
-
   handleChange = ({ target }) => {
     const { value } = target;
     this.setState({

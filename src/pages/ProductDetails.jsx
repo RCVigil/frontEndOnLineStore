@@ -37,7 +37,6 @@ export default class ProductDetails extends Component {
   }
 
   submit = () => {
-    // this.setState({ productReview: [obj] });
     this.getReviewListfromLocalStorage();
   }
 

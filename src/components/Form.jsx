@@ -31,9 +31,28 @@ export default class Form extends Component {
     const product = { id, email, avaliação, nota };
 
     const localInfo = JSON.parse(localStorage.getItem('reviewList'));
-    const data = [...[...localInfo || []], product];
-    localStorage.setItem('reviewList', JSON.stringify(data));
+    if (localInfo === null) {
+      const data = [product];
+      localStorage.setItem('reviewList', JSON.stringify(data));
+      submit(product);
+      return this.setState({
+        email: '',
+        avaliação: '',
+        nota: '',
+      });
+    }
+
+    const filter = localInfo.filter((item) => (
+      item.avaliação !== avaliação || item.id !== id));
+
+    const arr = [...filter, product];
+    localStorage.setItem('reviewList', JSON.stringify(arr));
     submit(product);
+    this.setState({
+      email: '',
+      avaliação: '',
+      nota: '',
+    });
   };
 
   render() {
@@ -111,23 +130,6 @@ export default class Form extends Component {
           </label>
         </div>
 
-        {/* <div className="rate">
-          <label htmlFor="star1" title="text">
-            <input data-testid="1-rating" type="radio" id="star1" name="r1" value="1" />
-          </label>
-          <label htmlFor="star2" title="text">
-            <input data-testid="2-rating" type="radio" id="star2" name="r2" value="2" />
-          </label>
-          <label htmlFor="star3" title="text">
-            <input data-testid="3-rating" type="radio" id="star3" name="r3" value="3" />
-          </label>
-          <label htmlFor="star4" title="text">
-            <input data-testid="4-rating" type="radio" id="star4" name="r4" value="4" />
-          </label>
-          <label htmlFor="star5" title="text">
-            <input data-testid="5-rating" type="radio" id="star5" name="r5" value="5" />
-          </label>
-        </div> */}
         <textarea
           data-testid="product-detail-evaluation"
           placeholder="Avalição"
