@@ -31,6 +31,7 @@ export default class Category extends Component {
             data-testid="category"
             key={ item.id }
             htmlFor={ item.id }
+            className="categoryRadio"
           >
             <input
               id={ item.id }

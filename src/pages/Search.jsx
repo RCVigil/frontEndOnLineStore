@@ -3,6 +3,8 @@ import { Link, Redirect } from 'react-router-dom';
 import Category from '../components/Category';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Loading from '../components/Loading';
+import imgCart from '../images/shopping-cart.png';
+import imgSearch from '../images/search.png';
 
 class Search extends Component {
   constructor() {
@@ -111,29 +113,35 @@ class Search extends Component {
         {redirect ? <Redirect
           to={ `/ProductDetails/${idProduct}` }
         /> : (
-          <>
-            <Link
-              to="/carrinho"
-              data-testid="shopping-cart-button"
-            >
-              Ir para o carrinho
-            </Link>
-            <input
-              className="inputSearch"
-              type="text"
-              data-testid="query-input"
-              placeholder="Busca"
-              onChange={ this.handleChange }
-              value={ inputSearch }
-            />
-            <button
-              data-testid="query-button"
-              type="button"
-              onClick={ this.onClickgetProducts }
-              disabled={ btn }
-            >
-              Buscar
-            </button>
+          <div className="home">
+            <header className="header">
+              <Link
+                to="/carrinho"
+                data-testid="shopping-cart-button"
+                className="cartButton"
+              >
+                <img src={ imgCart } alt="cart" width="40px" />
+              </Link>
+              <input
+                className="inputSearch"
+                type="text"
+                data-testid="query-input"
+                placeholder="Busca"
+                onChange={ this.handleChange }
+                value={ inputSearch }
+              />
+              <input
+                data-testid="query-button"
+                src={ imgSearch }
+                alt="Buscar"
+                type="image"
+                onClick={ this.onClickgetProducts }
+                disabled={ btn }
+                className="btnSearch"
+              />
+
+            </header>
+
             <div className="search">
               <Category categoryId={ this.categoryId } />
               <section className="results">
@@ -147,7 +155,7 @@ class Search extends Component {
               </section>
             </div>
 
-          </>
+          </div>
         )}
 
       </div>

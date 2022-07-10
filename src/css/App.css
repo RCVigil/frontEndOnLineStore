@@ -1,22 +1,51 @@
+body {
+  background-color: rgb(175, 175, 175);
+  margin: 10px;
+}
+
+.home {
+  gap: 100px;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.inputSearch {
+  height: 20px;
+  width: 500px;
+}
+
+.btnSearch {
+  height: 30px;
+}
+
 .category {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.categoryRadio {
+  background-color: rgb(138, 132, 132);
+  border-radius: 10px;
 }
 
 .search {
   display: flex;
-  gap: 20px;
+  gap: 200px;
 }
 
 .results {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  text-align: center;
 }
 
-.inputSearch {
-  width: 300px;
-}
 
 .listProducts {
   display: flex;
@@ -54,4 +83,9 @@
 
 .estrelas input[ type = 'radio' ]:checked ~ label i.fa:before {
   color: #ccc;
+} */
+
+/* .cartButton {
+  background-image: url('../images/icons8-favorite-cart-100.png');
+  width: 100px;
 } */
