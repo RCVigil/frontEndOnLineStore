@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import Form from '../components/Form';
 import '../css/App.css';
 import ReviewList from '../components/ReviewList';
+import Purchased from '../components/Purchased';
 
 export default class ProductDetails extends Component {
   state = {
@@ -55,6 +56,7 @@ export default class ProductDetails extends Component {
       <div>
         {loading ? <Loading /> : (
           <div>
+            <Purchased />
             <h4 data-testid="product-detail-name">
               {productObj.title}
             </h4>

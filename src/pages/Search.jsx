@@ -5,6 +5,7 @@ import { getProductsFromCategoryAndQuery } from '../services/api';
 import Loading from '../components/Loading';
 import imgCart from '../images/shopping-cart.png';
 import imgSearch from '../images/search.png';
+// import Purchased from '../components/Purchased';
 
 class Search extends Component {
   constructor() {
@@ -143,6 +144,27 @@ class Search extends Component {
               >
                 <img src={ imgCart } alt="cart" width="40px" />
               </Link>
+
+              {/* <Purchased /> */}
+
+              <input
+                className="inputSearch"
+                type="text"
+                data-testid="query-input"
+                placeholder="Busca"
+                onChange={ this.handleChange }
+                value={ inputSearch }
+              />
+              <input
+                data-testid="query-button"
+                src={ imgSearch }
+                alt="Buscar"
+                type="image"
+                onClick={ this.onClickgetProducts }
+                disabled={ btn }
+                className="btnSearch"
+              />
+
             </header>
 
             <div className="search">
