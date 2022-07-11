@@ -58,11 +58,17 @@ export default class ProductDetails extends Component {
             <h4 data-testid="product-detail-name">
               {productObj.title}
             </h4>
+            { productObj.shipping.free_shipping
+              ? <p data-testid="free-shipping"> Frete Grátis </p> : null }
             <p>
               R$
               {productObj.price}
             </p>
-            <img src={ productObj.thumbnail } alt={ productObj.title } />
+            <img
+              className="center-product-image"
+              src={ productObj.thumbnail }
+              alt={ productObj.title }
+            />
             <button
               type="button"
               data-testid="product-detail-add-to-cart"

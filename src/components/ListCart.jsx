@@ -38,6 +38,8 @@ export default class ListCart extends Component {
             {item.price}
 
           </p>
+          { item.shipping.free_shipping
+            ? <p data-testid="free-shipping"> Frete Grátis </p> : null }
           <div>
             <button
               type="button"
