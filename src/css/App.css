@@ -8,9 +8,9 @@ body {
 }
 
 .header {
-  align-items: center;
   display: flex;
   gap: 10px;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -21,6 +21,10 @@ body {
 
 .btnSearch {
   height: 30px;
+}
+
+.void-input {
+  padding-left: 120px;
 }
 
 .category {
@@ -36,7 +40,7 @@ body {
 
 .search {
   display: flex;
-  gap: 200px;
+  gap: 100px;
 }
 
 .results {
@@ -48,6 +52,7 @@ body {
 
 
 .listProducts {
+  align-items: center;
   display: flex;
   flex-direction: column;
 }
@@ -70,6 +75,7 @@ body {
   flex-direction: row;
   justify-content: space-around;
 }
+
 
 /*
 .estrelas input[ type = 'radio' ] {

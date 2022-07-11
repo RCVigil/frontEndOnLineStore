@@ -84,6 +84,8 @@ class Search extends Component {
           R$
           {product.price}
         </p>
+        { product.shipping.free_shipping
+          ? <p data-testid="free-shipping"> Frete Grátis </p> : null }
         <button
           type="button"
           data-testid="product-detail-link"
@@ -115,6 +117,25 @@ class Search extends Component {
         /> : (
           <div className="home">
             <header className="header">
+              <div>
+                <input
+                  className="inputSearch"
+                  type="text"
+                  data-testid="query-input"
+                  placeholder="Busca"
+                  onChange={ this.handleChange }
+                  value={ inputSearch }
+                />
+                <input
+                  data-testid="query-button"
+                  src={ imgSearch }
+                  alt="Buscar"
+                  type="image"
+                  onClick={ this.onClickgetProducts }
+                  disabled={ btn }
+                  className="btnSearch"
+                />
+              </div>
               <Link
                 to="/carrinho"
                 data-testid="shopping-cart-button"
@@ -122,24 +143,6 @@ class Search extends Component {
               >
                 <img src={ imgCart } alt="cart" width="40px" />
               </Link>
-              <input
-                className="inputSearch"
-                type="text"
-                data-testid="query-input"
-                placeholder="Busca"
-                onChange={ this.handleChange }
-                value={ inputSearch }
-              />
-              <input
-                data-testid="query-button"
-                src={ imgSearch }
-                alt="Buscar"
-                type="image"
-                onClick={ this.onClickgetProducts }
-                disabled={ btn }
-                className="btnSearch"
-              />
-
             </header>
 
             <div className="search">
@@ -148,6 +151,7 @@ class Search extends Component {
 
                 {displayList ? (
                   <h4
+                    className="void-input"
                     data-testid="home-initial-message"
                   >
                     Digite algum termo de pesquisa ou escolha uma categoria.
