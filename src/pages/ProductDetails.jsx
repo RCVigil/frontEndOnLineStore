@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import Form from '../components/Form';
 import '../css/App.css';
 import ReviewList from '../components/ReviewList';
+import Purchased from '../components/Purchased';
 
 export default class ProductDetails extends Component {
   state = {
@@ -55,14 +56,21 @@ export default class ProductDetails extends Component {
       <div>
         {loading ? <Loading /> : (
           <div>
+            <Purchased />
             <h4 data-testid="product-detail-name">
               {productObj.title}
             </h4>
+            { productObj.shipping.free_shipping
+              ? <p data-testid="free-shipping"> Frete Grátis </p> : null }
             <p>
               R$
               {productObj.price}
             </p>
-            <img src={ productObj.thumbnail } alt={ productObj.title } />
+            <img
+              className="center-product-image"
+              src={ productObj.thumbnail }
+              alt={ productObj.title }
+            />
             <button
               type="button"
               data-testid="product-detail-add-to-cart"
