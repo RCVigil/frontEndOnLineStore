@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Category from '../components/Category';
@@ -21,6 +22,14 @@ class Search extends Component {
       idProduct: '',
       redirect: false,
     };
+  }
+
+  componentDidMount() {
+    const { quantityProductCart } = this.props;
+    const local = JSON.parse(localStorage.getItem('productCart'));
+    if (local) {
+      quantityProductCart(local.length);
+    }
   }
 
   handleChange = ({ target }) => {
@@ -55,14 +64,16 @@ class Search extends Component {
   }
 
   addToCart = (obj) => {
+    const { quantityProductCart } = this.props;
     const local = JSON.parse(localStorage.getItem('productCart'));
     if (local === null) {
       const data = [obj];
       return localStorage.setItem('productCart', JSON.stringify(data));
     }
-    const filter = local.filter(({ id }) => id !== obj.id);
-    const arr = [...filter, obj];
+    // const filter = local.filter(({ id }) => id !== obj.id);
+    const arr = [...local, obj];
     localStorage.setItem('productCart', JSON.stringify(arr));
+    quantityProductCart(arr.length);
   }
 
   renderProductList = () => {
@@ -92,7 +103,7 @@ class Search extends Component {
           data-testid="product-detail-link"
           onClick={ () => this.ProductDetails(product) }
         >
-          Detalhes
+          Details
 
         </button>
         <button
@@ -111,6 +122,7 @@ class Search extends Component {
 
   render() {
     const { inputSearch, btn, displayList, idProduct, redirect } = this.state;
+    const { quantityCart } = this.props;
     return (
       <div>
         {redirect ? <Redirect
@@ -143,6 +155,7 @@ class Search extends Component {
                 className="cartButton"
               >
                 <img src={ imgCart } alt="cart" width="40px" />
+                <p data-testid="shopping-cart-size">{quantityCart}</p>
               </Link>
             </header>
 
@@ -167,5 +180,10 @@ class Search extends Component {
     );
   }
 }
+
+Search.propTypes = {
+  quantityCart: PropTypes.number.isRequired,
+  quantityProductCart: PropTypes.func.isRequired,
+};
 
 export default Search;

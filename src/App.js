@@ -6,21 +6,44 @@ import Carrinho from './pages/Carrinho';
 import ProductDetails from './pages/ProductDetails';
 
 class App extends Component {
+  state = {
+    quantity: 0,
+  }
+
+  quantityProductCart = (num) => {
+    this.setState({ quantity: num });
+  }
+
   render() {
+    const { quantity } = this.state;
     return (
       <div>
         <BrowserRouter>
           <Link to="/">Search</Link>
           <Switch>
-            <Route exact path="/" component={ Search } />
+            <Route
+              exact
+              path="/"
+              render={ () => (<Search
+                quantityCart={ quantity }
+                quantityProductCart={ this.quantityProductCart }
+              />) }
+            />
             <Route
               exact
               path="/carrinho"
-              component={ Carrinho }
+              render={ () => (<Carrinho
+                quantityProductCart={ this.quantityProductCart }
+              />) }
+
             />
             <Route
               path="/ProductDetails/:productId"
-              render={ (props) => <ProductDetails { ...props } /> }
+              render={ (props) => (<ProductDetails
+                { ...props }
+                quantityCart={ quantity }
+                quantityProductCart={ this.quantityProductCart }
+              />) }
             />
           </Switch>
         </BrowserRouter>
