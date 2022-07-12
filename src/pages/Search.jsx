@@ -103,7 +103,7 @@ class Search extends Component {
           data-testid="product-detail-link"
           onClick={ () => this.ProductDetails(product) }
         >
-          Detalhes
+          Details
 
         </button>
         <button
