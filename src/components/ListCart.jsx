@@ -6,17 +6,26 @@ export default class ListCart extends Component {
     quantityProduct: 1,
   }
 
+  quantity = (num) => {
+    const { quantityProduct } = this.props;
+    quantityProduct(num);
+  }
+
   increaseQuantity = (max) => {
     const { quantityProduct } = this.state;
     if (quantityProduct < max) {
-      this.setState((set) => ({ quantityProduct: set.quantityProduct + 1 }));
+      this.setState((set) => ({ quantityProduct: set.quantityProduct + 1 }), () => {
+        this.quantity(true);
+      });
     }
   }
 
   descreaseQuantity = () => {
     const { quantityProduct } = this.state;
     if (quantityProduct > 1) {
-      this.setState((set) => ({ quantityProduct: set.quantityProduct - 1 }));
+      this.setState((set) => ({ quantityProduct: set.quantityProduct - 1 }), () => {
+        this.quantity(false);
+      });
     }
   }
 

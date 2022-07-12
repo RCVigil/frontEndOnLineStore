@@ -6,6 +6,7 @@ import Form from '../components/Form';
 import '../css/App.css';
 import ReviewList from '../components/ReviewList';
 import Purchased from '../components/Purchased';
+import imgCart from '../images/shopping-cart.png';
 
 export default class ProductDetails extends Component {
   state = {
@@ -16,6 +17,11 @@ export default class ProductDetails extends Component {
 
   componentDidMount() {
     this.getApi();
+    const { quantityProductCart } = this.props;
+    const local = JSON.parse(localStorage.getItem('productCart'));
+    if (local) {
+      quantityProductCart(local.length);
+    }
   }
 
   getApi = async () => {
@@ -27,6 +33,7 @@ export default class ProductDetails extends Component {
   }
 
   addToCart = (obj) => {
+    const { quantityProductCart } = this.props;
     const local = JSON.parse(localStorage.getItem('productCart'));
     if (local === null) {
       const data = [obj];
@@ -35,6 +42,7 @@ export default class ProductDetails extends Component {
     const filter = local.filter(({ id }) => id !== obj.id);
     const arr = [...filter, obj];
     localStorage.setItem('productCart', JSON.stringify(arr));
+    quantityProductCart(arr.length);
   }
 
   submit = () => {
@@ -52,8 +60,10 @@ export default class ProductDetails extends Component {
 
   render() {
     const { loading, productObj, productReview } = this.state;
+    const { quantityCart } = this.props;
     return (
       <div>
+        <p data-testid="shopping-cart-size">{quantityCart}</p>
         {loading ? <Loading /> : (
           <div>
             <Purchased />
@@ -83,7 +93,7 @@ export default class ProductDetails extends Component {
               to="/carrinho"
               data-testid="shopping-cart-button"
             >
-              Ir para o carrinho
+              <img src={ imgCart } alt="cart" width="40px" />
             </Link>
             <Form id={ productObj.id } submit={ this.submit } />
             { productReview.map((item, index) => (

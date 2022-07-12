@@ -76,9 +76,7 @@ body {
   justify-content: space-around;
 }
 
-
-/*
-.estrelas input[ type = 'radio' ] {
+/* .estrelas input[ type = 'radio' ] {
   display: none;
 }
 
@@ -89,9 +87,9 @@ body {
 
 .estrelas input[ type = 'radio' ]:checked ~ label i.fa:before {
   color: #ccc;
-} */
+}
 
-/* .cartButton {
+ .cartButton {
   background-image: url('../images/icons8-favorite-cart-100.png');
   width: 100px;
 } */
